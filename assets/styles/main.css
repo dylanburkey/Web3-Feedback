@@ -1,0 +1,407 @@
+@layer reset, base, layout, components, utilities;
+
+/* Reset layer - the reset/normalize CSS from previous response goes here */
+@layer reset {
+  /* Modern CSS Reset + Normalize */
+  *, 
+  *::before, 
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  /* Document */
+  html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    tab-size: 4;
+    height: 100%;
+  }
+
+  /* Sections */
+  body {
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeSpeed;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6, p {
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+  }
+
+  /* Grouping content */
+  hr {
+    height: 0;
+    color: inherit;
+  }
+
+  pre, code, kbd, samp {
+    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 1em;
+  }
+
+  /* Text-level semantics */
+  a {
+    background-color: transparent;
+    text-decoration-skip-ink: auto;
+    color: inherit;
+  }
+
+  abbr[title] {
+    text-decoration: underline dotted;
+  }
+
+  b, strong {
+    font-weight: bolder;
+  }
+
+  small {
+    font-size: 80%;
+  }
+
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+  /* Embedded content */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+  }
+
+  /* Forms */
+  button, input, optgroup, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  button, select {
+    text-transform: none;
+  }
+
+  button, [type='button'], [type='reset'], [type='submit'] {
+    -webkit-appearance: button;
+    background-color: transparent;
+    background-image: none;
+  }
+
+  ::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+  }
+
+  :-moz-focusring {
+    outline: 1px dotted ButtonText;
+  }
+
+  :-moz-ui-invalid {
+    box-shadow: none;
+  }
+
+  /* Interactive */
+  summary {
+    display: list-item;
+  }
+
+  /* Remove list styles */
+  ul, ol {
+    list-style: none;
+  }
+
+  /* Accessibility */
+  [aria-busy="true"] {
+    cursor: progress;
+  }
+
+  [aria-controls] {
+    cursor: pointer;
+  }
+
+  [aria-disabled="true"], 
+  [disabled] {
+    cursor: not-allowed;
+  }
+
+  /* Hidden attribute */
+  [hidden] {
+    display: none !important;
+  }
+
+  /* Media queries */
+  @media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+      scroll-behavior: auto;
+    }
+    
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: rgb(var(--primary-color) / 0.2);
+    color: currentColor;
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    outline: 2px solid rgb(var(--primary-color));
+    outline-offset: 2px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--background-color));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--primary-color) / 0.2);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--primary-color) / 0.3);
+  }
+}
+
+/* Base layer - fundamental styles */
+@layer base {
+  :root {
+    --max-width: 1240px;
+    --container-padding: clamp(1rem, 3vw, 2rem);
+    --header-height: clamp(4rem, 8vh, 6rem);
+    
+    /* Colors */
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --background-color: #ffffff;
+    --text-color: #212529;
+    
+    /* Typography */
+    --step-0: clamp(1rem, 0.91rem + 0.43vw, 1.25rem);
+    --step-1: clamp(1.25rem, 1.07rem + 0.63vw, 1.56rem);
+    --step-2: clamp(1.44rem, 1.26rem + 0.89vw, 1.95rem);
+    /* ... other type scales ... */
+    --toc-spacing: clamp(2rem, 5vw, 4rem);
+    --transition-speed: 0.3s;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
+  }
+}
+
+/* Layout layer - main structural elements */
+@layer layout {
+  /* Container */
+  .container {
+    width: min(100% - (var(--container-padding) * 2), var(--max-width));
+    margin-inline: auto;
+  }
+
+  /* Header */
+  header {
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--background-color);
+    border-bottom: 1px solid rgb(0 0 0 / 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  /* Navigation */
+  nav {
+    display: flex;
+    gap: clamp(1rem, 2vw, 2rem);
+  }
+
+  /* Main content grid */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, 20rem), 1fr)
+    );
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  /* Sections */
+  section {
+    margin-block: clamp(2rem, 5vw, 4rem);
+  }
+}
+
+/* Components layer - reusable components */
+@layer components {
+  .grid-item {
+    background-color: var(--background-color);
+    padding: clamp(1rem, 2vw, 2rem);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+  }
+
+  /* Navigation links */
+  nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover {
+    color: var(--primary-color);
+  }
+
+  /* Footer */
+  footer ul {
+    display: flex;
+    gap: clamp(1rem, 2vw, 2rem);
+    justify-content: center;
+    padding: clamp(2rem, 5vw, 4rem) 0;
+  }
+
+  /* Table of Contents */
+  .toc {
+    margin-block: var(--toc-spacing);
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .toc-list {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: clamp(1rem, 2vw, 2rem);
+    list-style: none;
+    padding: 0;
+    width: max-content;
+    margin: 0 auto;
+  }
+
+  .toc-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    white-space: nowrap;
+    transition: all var(--transition-speed) var(--transition-timing);
+    background: linear-gradient(to bottom, transparent 0%, transparent 100%);
+  }
+
+  .toc-link:hover,
+  .toc-link:focus-visible {
+    background: linear-gradient(to bottom, rgb(var(--primary-color) / 0.1) 0%, transparent 100%);
+    transform: translateX(0.5rem);
+  }
+
+  .toc-number {
+    font-family: monospace;
+    font-size: 0.875em;
+    color: var(--primary-color);
+    opacity: 0.8;
+  }
+
+  .toc-text {
+    font-size: var(--step-0);
+    font-weight: 500;
+  }
+
+  /* Section transitions */
+  section {
+    opacity: 0.8;
+    transform: translateY(1rem);
+    transition: all var(--transition-speed) var(--transition-timing);
+  }
+
+  section:target {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Active section indicator */
+  section:target::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    width: 0.25rem;
+    height: 2rem;
+    background-color: var(--primary-color);
+    border-radius: 0.125rem;
+    transform: scaleY(0);
+    animation: indicator 0.3s var(--transition-timing) forwards;
+  }
+
+  @keyframes indicator {
+    to {
+      transform: scaleY(1);
+    }
+  }
+}
+
+/* Utilities layer - helper classes */
+@layer utilities {
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .scroll-margin {
+    scroll-margin-top: var(--header-height);
+  }
+}
